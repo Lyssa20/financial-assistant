@@ -1,34 +1,34 @@
 #include "fileio.h"
-#include "advice.h"    
-#include <fstream>     // gives ofstream
+#include "advice.h"
+#include <fstream>
 #include <iostream>
 #include <iomanip>
-#include <ctime>       // gets the current date and time
+#include <ctime>
 
 using namespace std;
+
 void saveReport(const Budget &b, const GroceryList &g,
                 int decision, const string &filename) {
- 
+
     ofstream file(filename.c_str());
 
     if (!file.is_open()) {
-        cout << "  ERROR: Could not save report to \"" << filename << "\"" << endl;
-        cout << "  Make sure you have write permission in this folder." << endl;
-        return;   
+        cout << "  Couldn't save to \"" << filename << "\"." << endl;
+        cout << "  Check that you have write permission in this folder." << endl;
+        return;
     }
 
-    // time_t stores a timestamp;
+    // grab current time for the report header
     time_t now = time(0);
     string timestamp = ctime(&now);
 
-   
-    if (!timestamp.empty() && timestamp[timestamp.length() - 1] == '\n') {
-    timestamp.erase(timestamp.length() - 1);
-    }
+    // ctime adds a newline at the end, strip it
+    if (!timestamp.empty() && timestamp[timestamp.length() - 1] == '\n')
+        timestamp.erase(timestamp.length() - 1);
 
     file << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-    file << "  FAMILY FINANCIAL ASSISTANT REPORT     " << endl;
-    file << "  Generated: " << timestamp                  << endl;
+    file << "   FAMILY FINANCIAL ASSISTANT - REPORT     " << endl;
+    file << "   Generated: " << timestamp                << endl;
     file << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 
     file << "\nINCOME" << endl;
@@ -44,8 +44,7 @@ void saveReport(const Budget &b, const GroceryList &g,
              << "E " << setw(10) << b.expenses[i].amount
              << "(" << setprecision(1) << pct << "%)" << endl;
     }
-    file << "  Total expenses : E " << fixed << setprecision(2)
-         << b.totalExpenses << endl;
+    file << "  Total expenses : E " << fixed << setprecision(2) << b.totalExpenses << endl;
 
     file << "\nRESULT" << endl;
     file << "  Remaining after expenses : E " << b.remaining << endl;
@@ -62,9 +61,9 @@ void saveReport(const Budget &b, const GroceryList &g,
 
     file << "\nDECISION: ";
     switch (decision) {
-        case 0: file << "WITHIN BUDGET"  << endl; break;
-        case 1: file << "RISKY"          << endl; break;
-        case 2: file << "OVER BUDGET"    << endl; break;
+        case 0: file << "WITHIN BUDGET" << endl; break;
+        case 1: file << "RISKY"         << endl; break;
+        case 2: file << "OVER BUDGET"   << endl; break;
     }
 
     int hi = findHighestExpense(b);
@@ -73,11 +72,11 @@ void saveReport(const Budget &b, const GroceryList &g,
              << " (E " << b.expenses[hi].amount << ")" << endl;
     }
 
-    file << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    file << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
     file << "  End of report" << endl;
-    file << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    file << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 
-    file.close();  
+    file.close();
 
-    cout << "\n  ? Report saved to \"" << filename << "\"" << endl;
+    cout << "\n  Report saved to \"" << filename << "\"" << endl;
 }
