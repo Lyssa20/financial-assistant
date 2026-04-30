@@ -1,7 +1,7 @@
 #include "grocery.h"
 #include <iostream>
 #include <iomanip>
-#include <limits>    //clears bad input)
+#include <limits>
 
 using namespace std;
 
@@ -16,41 +16,39 @@ void initGroceryList(GroceryList &g) {
 }
 
 void inputGroceryItems(GroceryList &g) {
-    cout << "\n~~ Grocery List: please add your items ~~" << endl;
-    cout << "Type each item and press Enter, Type 'done' when your done\n" << endl;
+    cout << "\n~~~ Grocery List ~~~" << endl;
+    cout << "Add your items one by one. Type 'done' when your finished.\n" << endl;
 
     string itemName;
-    
+
+    // remove leftover newline from previous cin >> so getline works properly
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-    while (g.itemCount < 50) {   // stay within array bounds
+    while (g.itemCount < 50) {
         cout << "  Item " << (g.itemCount + 1) << ": ";
-        getline(cin, itemName);  
+        getline(cin, itemName);
 
         if (itemName == "done" || itemName == "Done") break;
-
-        // Don't store blank entries
-        if (itemName.empty()) continue;
+        if (itemName.empty()) continue; // skip blanks
 
         g.items[g.itemCount].name  = itemName;
-        g.items[g.itemCount].price = 0.0;
+        g.items[g.itemCount].price = 0.0; // price comes later
         g.itemCount++;
     }
 
-    cout << "\n" << g.itemCount << " items added to your list." << endl;
+    cout << "\n" << g.itemCount << " items on your list." << endl;
 }
 
 void inputGroceryPrices(GroceryList &g) {
-    cout << "\n~~~ Grocery List: please enter Prices ~~~" << endl;
-    cout << "Enter the price for each item (type 0 if you didn't buy it).\n" << endl;
+    cout << "\n~~~ Enter Prices ~~~" << endl;
+    cout << "Enter the price for each item. Put 0 if you didn't get it.\n" << endl;
 
     for (int i = 0; i < g.itemCount; i++) {
-        cout << "  Price for \"" << g.items[i].name << "\": E ";
+        cout << "  " << g.items[i].name << ": E ";
         cin  >> g.items[i].price;
 
-        // Input validation: reject negative prices (user typo)
         if (g.items[i].price < 0) {
-            cout << "  (Price can't be negative, Setting to 0.)" << endl;
+            cout << "  (Can't be negative so setting to 0)" << endl;
             g.items[i].price = 0.0;
         }
     }
@@ -66,19 +64,18 @@ void calculateGroceryTotal(GroceryList &g) {
 void displayGroceryList(const GroceryList &g) {
     cout << "\n";
     cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-    cout << "           GROCERY LIST                 " << endl;
+    cout << "            GROCERY LIST                " << endl;
     cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 
     for (int i = 0; i < g.itemCount; i++) {
-        // Only show items that were actually bought
         if (g.items[i].price > 0) {
             cout << "  " << left << setw(25) << g.items[i].name
                  << "E " << fixed << setprecision(2) << g.items[i].price << endl;
         }
     }
 
-    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-    cout << left << setw(25) << "  TOTAL"
+    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    cout << "  " << left << setw(25) << "TOTAL"
          << "E " << fixed << setprecision(2) << g.totalCost << endl;
     cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 }
