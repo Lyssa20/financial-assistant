@@ -4,14 +4,14 @@
 #include <string>
 
 struct GroceryItem {
-    std::string name;   
-    double price;       
+    std::string name;
+    double price;
 };
 
 struct GroceryList {
-    GroceryItem items[50];  
-    int itemCount;          
-    double totalCost;       
+    GroceryItem items[50]; // 50 items should be more than enough
+    int itemCount;
+    double totalCost;
 };
 
 void initGroceryList(GroceryList &g);
