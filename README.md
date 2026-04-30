@@ -1,30 +1,23 @@
 # Family Financial Assistant
-This is a C++ console-based financial tool that helps families track monthly income, plan expenses, build grocery lists, and receive budget advice with results saved to a local report file.
-It's built as a personal project to apply **C++ fundamentals**, **data structures**, and **algorithmic thinking** to a real-world problem.
+This is a C++ console-based financial tool that helps families track monthly income, plan expenses, build grocery lists, and get simple advice on where to cut costs.
 
 # Why I Built This
-Managing a family budget involves real logic problems:
-? How can you keep track of every little expense?
-? How do you know if you can afford groceries before you overspend?
-? How do you identify which expense to cut first when money is tight?
 
-# Data Structures & Algorithms Used
+- My family has two sources of income and a lot of set monthly costs, such as rent, school fees, electricity and water. We would have a rough idea, month to month, of how much money remained, but we never really tracked it properly. I wanted to create something that would actually assist with that, something that my mum could open and use anywhere.
+- I noticed that our biggest source of overspending was grocery shopping. We would go without a real plan and come back over budget. So I added a section where you write your list before you leave, then enter in actual prices to calculate and make sure you're not overspending and help you identify which expense to cut first when money is tight.
 
-This project was a practical exercise in applying DSA concepts:
+# What I learned
 
-- **Structs** groups related data
-- **Linear search O(n)** looks through the expense array to find the maximum value
-- **Loop-based accumulation** summing arrays without the use of built-in functions, but instead, by iteration
-- **File streams**  `ofstream` for writing structured reports
+- I have used structs before, but this was the first time I had a project where I actually separated things properly into multiple .h and .cpp files. Getting the #ifndef guards right and figuring out which header included which was more time-consuming than I thought it would be.
+- The file I/O part (fileio.cpp) was unfamiliar to me. I hadn't used ofstream before. I also had a weird bug with getline skipping the first item in the grocery list, which was a leftover newline in the input buffer. I fixed it with cin.ignore().
 
 # How to Run
 
-### Option 1 — Dev-C++ (Windows, easiest)
+## Dev-C++ (Windows, easiest)
 1. Download [Dev-C++](https://sourceforge.net/projects/orwelldevcpp/)
 2. File → New → Project → Console Application → C++
 3. Add all files to the project
 4. compile and run
-
 
 # Future Improvements
 
@@ -33,5 +26,5 @@ This project was a practical exercise in applying DSA concepts:
  ~ Use a linked list instead of a fixed array for unlimited expense entries
  ~ Add a savings goal tracker
 
-![App Demo](FA.gif)
+![App Demo](Cal.gif)
 
