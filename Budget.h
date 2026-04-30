@@ -1,31 +1,27 @@
-#ifndef BUDGET_H   //stops this file being read twice by the compiler
+#ifndef BUDGET_H   // stops the compiler from reading this file twice
 #define BUDGET_H
-#include <string> // for std::string
+#include <string>
 
 struct Expense {
-    std::string name;   
-    double amount;      
+    std::string name;
+    double amount;
 };
 
 struct Budget {
-    
-    double salary1;           
-    double salary2;           
+    double salary1;       
+    double salary2;       
 
-    Expense expenses[10];     
-    int expenseCount;         
+    Expense expenses[10]; // fixed array 10 categories is enough for a family
+    int expenseCount;
 
     double totalIncome;
     double totalExpenses;
-    double remaining;         // totalIncome - totalExpenses
+    double remaining;     // what's left after all expenses
 };
 
 void initializeBudget(Budget &b);
-
 void inputExpenses(Budget &b);
-
 void calculateBudget(Budget &b);
-
 void displayBudgetSummary(const Budget &b);
 
-#endif 
+#endif
